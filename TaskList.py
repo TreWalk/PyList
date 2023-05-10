@@ -86,6 +86,7 @@ while True:
         break
     else:
         print('Invalid Command')
+        
     elif user_choice == 'exit':
         print('---Program successfully closed---')
         break

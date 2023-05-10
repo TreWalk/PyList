@@ -19,41 +19,73 @@ while True:
         try:
             with open('tasklist.txt', 'r') as file:
                 tasks = file.readlines()
+
             for index, item in enumerate(tasks):
                 if not item.strip():
                     continue
-            row = f"{index + 1}.{item.strip().title()}"
-            print(row)
+                row = f"{index + 1}.{item.strip().title()}"
+                print(row)
         except FileNotFoundError:
             print('Error: File not found')
 
     elif user_choice == 'edit':
-        number = int(input('Item Number to Edit: '))
-        number = number -1
+        while True:
+            try:
+                with open('tasklist.txt', 'r') as file:
+                    tasks = file.readlines()
 
-        with open('tasklist.txt', 'r') as file:
-            tasks = file.readlines()
+                number = int(input('Item Number to Edit: '))
+                number = number - 1
 
-        new_task = input('Enter New Task: ')
-        tasks[number] = new_task + '\n'
+                if number < 0 or number >= len(tasks):
+                    print("Invalid input. Enter a valid number.")
+                    continue
 
-        with open("tasklist.txt", 'w') as file:
-            file.writelines(tasks)
+                new_task = input('Enter New Task: ')
+                tasks[number] = new_task + '\n'
+
+                with open("tasklist.txt", 'w') as file:
+                    file.writelines(tasks)
+
+                print("Task updated successfully.")
+                break
+
+            except ValueError:
+                print("Invalid input. Enter a valid number.")
+                continue
 
     elif user_choice == 'complete':
-        number = int(input('Task Number to Complete: '))
+        while True:
+            try:
+                number = int(input('Task Number to Complete: '))
 
-        with open('tasklist.txt', 'r') as file:
-            tasks = file.readlines()
-        index = number -1
-        completed_task = tasks[index].strip('\n')
-        tasks.pop(index)
+                with open('tasklist.txt', 'r') as file:
+                    tasks = file.readlines()
 
-        with open('tasklist.txt', 'w') as file:
-            file.writelines(tasks)
+                index = number -1
 
-        print(f'---Task {number}: {completed_task.strip()} has been completed.---')
+                if index < 0 or index >= len(tasks) or not tasks[index].strip():
+                    print("Invalid input. Enter a valid number.")
+                    continue
 
+                completed_task = tasks[index].strip('\n')
+                tasks.pop(index)
+
+                with open('tasklist.txt', 'w') as file:
+                    file.writelines(tasks)
+
+                print(f'---Task {number}: {completed_task.title()} has been completed.---')
+                break
+
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+                continue
+
+    elif user_choice == 'exit':
+        print('---Program successfully closed---')
+        break
+    else:
+        print('Invalid Command')
     elif user_choice == 'exit':
         print('---Program successfully closed---')
         break

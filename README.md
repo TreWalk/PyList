@@ -6,5 +6,4 @@ Updates:
 Encapsulated f.readlines() and f.writelines() into the functions get_tasks and write_tasks
 
 Next Topics:
-OOP classes
-GUI
+OOP classes and GUI
